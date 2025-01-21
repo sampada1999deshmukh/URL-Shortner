@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics for {{ analytics_data.short_url }}</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #4CAF50;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    a {
+      color: #4CAF50;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    table th,
+    table td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+    }
+
+    table th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    table tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .no-logs {
+      text-align: center;
+      font-size: 18px;
+      color: #777;
+      margin-top: 20px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .back-link:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Analytics for Short URL</h1>
+    <p><strong>Short URL:</strong> <a href="{{ analytics_data.short_url }}" target="_blank">{{ analytics_data.short_url }}</a></p>
+    <p><strong>Original URL:</strong> <a href="{{ analytics_data.original_url }}" target="_blank">{{ analytics_data.original_url }}</a></p>
+    <p><strong>Total Access Count:</strong> {{ analytics_data.access_count }}</p>
+
+    {% if analytics_data.logs %}
+      <h2>Access Log:</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>IP Address</th>
+            <th>Timestamp</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for log in analytics_data.logs %}
+            <tr>
+              <td>{{ log.ip_address }}</td>
+              <td>{{ log.timestamp }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="no-logs">No access logs available for this URL.</p>
+    {% endif %}
+
+    <a href="/" class="back-link">Back to Home</a>
+  </div>
+</body>
+</html>

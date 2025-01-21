@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Shortener</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #ffffff;
+      color: #333333;
+      border-radius: 10px;
+      padding: 30px;
+      max-width: 500px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 24px;
+      color: #6a11cb;
+      margin-bottom: 20px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    input:focus {
+      border-color: #6a11cb;
+      outline: none;
+      box-shadow: 0 0 5px rgba(106, 17, 203, 0.5);
+    }
+
+    button {
+      background: #6a11cb;
+      color: #ffffff;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #4c0da9;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #4caf50;
+      font-weight: bold;
+    }
+
+    a {
+      color: #4caf50;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>URL Shortener</h1>
+    <form action="/shorten" method="POST">
+      <input type="url" name="original_url" placeholder="Enter your long URL" required>
+      <input type="number" name="expiration_time" placeholder="Expiration time (hours)" min="1">
+      <button type="submit">Generate Short URL</button>
+    </form>
+    <div class="result">
+      {% if short_url %}
+    <p>Your short URL is:
+    <a href="{{ url_for('URL.redirect_to_original', short_id=short_url.split('/')[-1]) }}" target="_blank">
+        {{ short_url }}
+    </a>
+    </p>
+      <p>
+      <a href="{{ url_for('URL.analytics', short_id=short_url.split('/')[-1]) }}">View Analytics</a>
+    </p>
+{% endif %}
+
+    </div>
+  </div>
+</body>
+</html>
